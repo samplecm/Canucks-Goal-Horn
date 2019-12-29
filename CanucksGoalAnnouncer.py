@@ -19,8 +19,7 @@ initialTime = time.time()
 
 while (gameOn == 1):
 	
-		#def GoalAnnouncer():
-	#pass html in as string or file.
+
 	
 	source = requests.get('https://www.thescore.com/nhl/events').text
 	
@@ -127,8 +126,8 @@ while (now.hour < finishHour):
 		msg = f"Subject:{subject}\n\n{body}"
 	
 		server.sendmail(
-			'pythonemailerguy',
-			'csample@phas.ubc.ca',
+			'FromEmail',
+			'TOEmail',
 			 msg
 		 )
 			    
