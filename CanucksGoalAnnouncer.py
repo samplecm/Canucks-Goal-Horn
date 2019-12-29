@@ -13,24 +13,12 @@ import smtplib
 import time
 
 
-#Check if a game is on: 
-
-#def main():
-#	if __name__ == '__main__':
-#		   main()
-#	GoalAnnouncer()	            
-#
-
-
-#def GoalAnnouncer():
-#pass html in as string or file.
-
 source = requests.get('https://www.thescore.com/nhl/events').text
 
 webCode = BeautifulSoup(source,'lxml')
 
 divs=list(webCode.find_all('div',attrs={'class': 'col-xs-12 col-md-6'}))
-
+#Check if a game is on: 
 gameOn = 1
 while (gameOn == 1):
 	for i in range(len(divs)): #Find if a canucks game is today
