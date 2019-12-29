@@ -12,6 +12,9 @@ import re
 import smtplib
 import time
 
+emailFrom = '____________'
+emailTo = '_______________'
+
 
 source = requests.get('https://www.thescore.com/nhl/events').text
 
@@ -111,8 +114,8 @@ while (now.hour < finishHour):
 		msg = f"Subject:{subject}\n\n{body}"
 	
 		server.sendmail(
-			'pythonemailerguy',
-			'csample@phas.ubc.ca',
+			emailFrom,
+			emailTo,
 			 msg
 		 )
 			    
