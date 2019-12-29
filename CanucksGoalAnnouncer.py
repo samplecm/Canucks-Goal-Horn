@@ -121,7 +121,7 @@ while (now.hour < finishHour):
 		server.starttls()
 		server.ehlo()
 		
-		server.login('pythonemailerguy@gmail.com','emjlzlppuwsncmwm')
+		server.login('pythonemailerguy@gmail.com','password')
 		
 		subject = 'CANUCKS GOAL!'
 		body= 'GOAL SCORED\n     ' + linkString
@@ -129,8 +129,8 @@ while (now.hour < finishHour):
 		msg = f"Subject:{subject}\n\n{body}"
 	
 		server.sendmail(
-			'pythonemailerguy',
-			'csample@phas.ubc.ca',
+			'emailFrom',
+			'emailTo',
 			 msg
 		 )
 			    
