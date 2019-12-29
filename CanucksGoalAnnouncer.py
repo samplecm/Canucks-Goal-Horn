@@ -19,7 +19,8 @@ initialTime = time.time()
 
 while (gameOn == 1):
 	
-
+		#def GoalAnnouncer():
+	#pass html in as string or file.
 	
 	source = requests.get('https://www.thescore.com/nhl/events').text
 	
@@ -47,15 +48,17 @@ while (gameOn == 1):
 		startHour = int(startTimeRaw[0:(colonIndex)])
 		startHour -= 3
 		startMin = int(startTimeRaw[colonIndex+1:colonIndex+3])
+		#Get the current run time:
+		runTime = time.time()-initialTime
+		runtTime = math.floor(runTime/60)
+		runTime = int(runTime)
+		print('Game hasnt started yet. Been trying for ' + str(runTime) + ' seconds')
+	
 	else: 
 		gameOn = 0 #the game has started	
+		
 	time.sleep(5)	
 	
-	#Get the current run time:
-	runTime = time.time()-initialTime
-	runtTime = math.floor(runTime/60)
-	runTime = int(runTime)
-	print('Game hasnt started yet. Been trying for ' + str(runTime) + ' seconds')
 	
 	
 	
@@ -86,7 +89,7 @@ gameCode = BeautifulSoup(source2,'lxml')
 
 goals = 0
 currentGoals = 0
-
+startTime = time.time()
 while (now.hour < finishHour):
 
 	
@@ -101,12 +104,12 @@ while (now.hour < finishHour):
 		
 		for div in teamNames1[0].findAll('div',attrs={'class':'Matchup__teamScore--2BeCA'}):		
 			currentGoals = str(div.text)	
-			print('away')
+			
 			
 	else:
 		for div in teamNames2[1].findAll('div',attrs={'class':'Matchup__teamScore--2BeCA'}):		
 			currentGoals = int(div.text)	
-			print('Home')
+			
 	#Do something to check if number of goals has changed here:		
 	if (currentGoals>goals):
 		goals +=1
@@ -126,15 +129,19 @@ while (now.hour < finishHour):
 		msg = f"Subject:{subject}\n\n{body}"
 	
 		server.sendmail(
-			'FromEmail',
-			'TOEmail',
+			'pythonemailerguy',
+			'csample@phas.ubc.ca',
 			 msg
 		 )
 			    
 		
 		print('Email successfully sent')
 		server.quit()
-	time.sleep(60)	
+	time.sleep(10)
+	runTime = time.time()-startTime
+	runtTime = math.floor(runTime/60)
+	runTime = int(runTime)
+	print('The game has been in progress for ' + str(runTime) + ' seconds')
 						  
 	  	
 			
