@@ -11,19 +11,23 @@ from datetime import datetime
 import re
 import smtplib
 import time
-
-emailFrom = '____________'
-emailTo = '_______________'
+import math
 
 
-source = requests.get('https://www.thescore.com/nhl/events').text
-
-webCode = BeautifulSoup(source,'lxml')
-
-divs=list(webCode.find_all('div',attrs={'class': 'col-xs-12 col-md-6'}))
-#Check if a game is on: 
 gameOn = 1
+initialTime = time.time()
+
 while (gameOn == 1):
+	
+		#def GoalAnnouncer():
+	#pass html in as string or file.
+	
+	source = requests.get('https://www.thescore.com/nhl/events').text
+	
+	webCode = BeautifulSoup(source,'lxml')
+	
+	divs=list(webCode.find_all('div',attrs={'class': 'col-xs-12 col-md-6'}))
+
 	for i in range(len(divs)): #Find if a canucks game is today
 		if ("VAN Canucks" in str(divs[i])):
 			canucksDiv = divs[i]
@@ -47,6 +51,15 @@ while (gameOn == 1):
 	else: 
 		gameOn = 0 #the game has started	
 	time.sleep(5)	
+	
+	#Get the current run time:
+	runTime = time.time()-initialTime
+	runtTime = math.floor(runTime/60)
+	runTime = int(runTime)
+	print('Game hasnt started yet. Been trying for ' + str(runTime) + ' seconds')
+	
+	
+	
 #Extract the start time: first get if Pm or am:
 if ("PM" in startTimeRaw):
 	startHour = startHour + 12 #add 12 if PM. subtract 3 for pacific time.
@@ -93,7 +106,7 @@ while (now.hour < finishHour):
 			
 	else:
 		for div in teamNames2[1].findAll('div',attrs={'class':'Matchup__teamScore--2BeCA'}):		
-			currentGoals = str(div.text)	
+			currentGoals = int(div.text)	
 			print('Home')
 	#Do something to check if number of goals has changed here:		
 	if (currentGoals>goals):
@@ -114,8 +127,8 @@ while (now.hour < finishHour):
 		msg = f"Subject:{subject}\n\n{body}"
 	
 		server.sendmail(
-			emailFrom,
-			emailTo,
+			'pythonemailerguy',
+			'csample@phas.ubc.ca',
 			 msg
 		 )
 			    
